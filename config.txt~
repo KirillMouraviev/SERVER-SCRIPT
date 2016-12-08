@@ -1,0 +1,8 @@
+#path to your pemfile
+pemfile=~/Documents/keys_amazon/my_key_pair_frankfurt.pem
+#public IP your server
+publicIP=35.156.184.41
+#password for Jupyter and server
+#USE COMMAND "SCREEN" TO SAVE IPYTHON FROM DEATH. SCREEN -R IF CONNECTION FAILED
+#USE AN INSTANCE WITH PRE-INSTALLED ANACONDA AND OTHER THINGS
+passwd=qweasdfg
