@@ -34,12 +34,43 @@ export PATH=~/anaconda/bin:$PATH
 wget https://codeload.github.com/ArtemKupriyanov/MACHINE-LEARNING/zip/master
 unzip master
 
-#installing Lasagne (development version)
+git clone https://github.com/KirillMouraviev/Data-Mining-in-action
+
 echo -e "\nexport PATH=/home/ubuntu/anaconda/bin:$PATH\n" >> .bashrc
+
+sudo apt-get install nvidia-cuda-toolkit #about 5 min
+Y
+# setup GPU and CUDA
+#for ubuntu 14.04:
+sudo wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_6.5-14_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb
+#for ubuntu 16.04:
+sudo wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.44-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1604_8.0.44-1_amd64.deb
+sudo apt-get update
+sudo apt-get install -y cuda # this takes a while (about 15 min)
+echo -e "\nexport PATH=/usr/local/cuda-8.0/bin:$PATH\n\nexport LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64" >> .bashrc
+
+#installing Lasagne (development version)
 git clone https://github.com/Lasagne/Lasagne.git
 cd Lasagne/
 pip install -r requirements.txt
 pip install --editable .
 cd ~
 
-git clone https://github.com/KirillMouraviev/Data-Mining-in-action
+# setup theano
+cat <<EOF >~/.theanorc
+[global]
+floatX = float32
+device = gpu0
+[nvcc]
+fastmath = True
+EOF
+
+#setup cudNN
+cd ~
+tar -zxf cuda.tar.gz
+cd cuda
+sudo cp lib64/* /usr/local/cuda/lib64/
+sudo cp include/* /usr/local/cuda/include/
+sudo reboot
